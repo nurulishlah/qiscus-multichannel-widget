@@ -53,7 +53,7 @@ class QiscusMultichannel
     public function adminLayout()
     {
         $data = $this->getData();
-        $app_id = $data['app_id'];
+
         ?>
 
         <div class="wrap">
@@ -63,7 +63,7 @@ class QiscusMultichannel
                     'qmultichannel'); ?>
             </p>
             <hr>
-            <form id="qmultichannel-admin-form">
+            <form id="qmultichannel-admin-form" method="post">
                 <table class="form-table">
                     <tbody>
                     <tr>
@@ -161,7 +161,7 @@ class QiscusMultichannel
      */
     public function addFooterCode()
     {
-//        $data = $this->getData();
+        $data = $this->getData();
 //
 //        // Get Data
 //        if (empty($data))
