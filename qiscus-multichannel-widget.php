@@ -22,7 +22,6 @@ if (!defined('QISCUS_MULTICHANNEL_PATH'))
  */
 class QiscusMultichannel
 {
-    private $option_name = 'qmultichannel_data';
 
     /**
      * QiscusMultichannel constructor.
@@ -91,6 +90,8 @@ class QiscusMultichannel
         <?php
     }
 
+    private $option_name = 'qmultichannel_data';
+
     /**
      * Returns the saved options data as an array
      *
@@ -99,6 +100,52 @@ class QiscusMultichannel
     private function getData()
     {
         return get_option($this->option_name, array());
+    }
+
+    /**
+     * The security nonce
+     *
+     * @var string
+     */
+    private $_nonce = 'qmultichannel_admin';
+
+    /**
+     * Qiscus Multichannel saving process
+     */
+    public function addAdminScripts()
+    {
+
+        wp_enqueue_script('qmultichannel-admin', QISCUS_MULTICHANNEL_URL, 'assets/js/admin.js', array(), 1.0);
+
+        $admin_options = array(
+            'ajax_url' => admin_url('admin-ajax.php'),
+            '_nonce'   => wp_create_nonce($this->_nonce),
+        );
+
+        wp_localize_script('qmultichannel-admin', 'qmultichannel_exchanger', $admin_options);
+    }
+
+    public function storeAdminData()
+    {
+        if (wp_verify_nonce($_POST['security'], $this->_nonce) === false)
+            die('Invalid Request!');
+
+        $data = $this->getData();
+
+        foreach ($_POST as $field=>$value) {
+            if (substr($field, 0, 13) !== "qmultichannel_" || empty($value))
+                continue;
+
+            $field = substr($field, 13);
+
+            $data[$field] = esc_attr__($value);
+        }
+
+        update_option($this->option_name);
+
+        echo __('App ID Saved!', 'qmultichannel');
+        die();
+
     }
 }
 
