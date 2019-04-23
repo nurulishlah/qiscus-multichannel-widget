@@ -31,7 +31,7 @@ class QiscusMultichannel
         add_action('admin_menu', array($this, 'addAdminMenu'));
         add_action('wp_ajax_store_admin_data', array($this, 'storeAdminData'));
         add_action('admin_enqueue_scripts', array($this, 'addAdminScripts'));
-        add_action('wp_header', array($this, 'addHeaderCode'));
+        add_action('wp_head', array($this, 'addHeaderCode'));
         add_action('wp_footer', array($this, 'addFooterCode'));
     }
 
@@ -159,35 +159,22 @@ class QiscusMultichannel
     /**
      * Qiscus Multichannel widget script
      */
-    public function addFooterCode($force = false)
+    public function addFooterCode()
     {
-        $data = $this->getData();
-
-        // Get Data
-        if (empty($data))
-            return;
+//        $data = $this->getData();
+//
+//        // Get Data
+//        if (empty($data))
+//            return;
 
         ?>
 
         <!-- Qiscus Multichannel Widget Script -->
-        <div id='qiscus-widget'></div>
+        <div id="qiscus-widget"></div>
         <script>
             window.qismoConfig = {
                 "appID": "hap-vq8ahvrbmhiyypcmg",
-                "buttonHasText": true,
-                "openAtStart": true,
-                "welcomeMessageStatus": true,
-                "welcomeTimeout": "3",
-                "buttonHasIcon": false,
-                "attentionGrabberStatus": false,
-                "grabberTextStatus": true,
-                "attentionGrabberText": "PROMO! Discount UP TO 75%   GET VOUCHER Rp 50.000",
-                "welcomeText": "Selamat Datang, Selamat berbelanja :)",
-                "grabberImage": true,
-                "attentionGrabberImage": "https://d1edrlpyc25xu0.cloudfront.net/hap-vq8ahvrbmhiyypcmg/image/upload/WuaUPQSDWw/5825-large_default.jpg",
-                "buttonText": "Chat Us",
-                "customerServiceName": "Multichannel Virtual Account",
-                "customerServiceAvatar": "https://d1edrlpyc25xu0.cloudfront.net/hap-vq8ahvrbmhiyypcmg/image/upload/Zp4keXaGCd/customer-support.png"
+                "buttonHasText": true
             }
 
         </script>
@@ -199,7 +186,7 @@ class QiscusMultichannel
 
     }
 
-    public function addHeaderCode($force = false)
+    public function addHeaderCode()
     {
         ?>
 
