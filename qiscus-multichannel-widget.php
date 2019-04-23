@@ -31,6 +31,7 @@ class QiscusMultichannel
         add_action('admin_menu', array($this, 'addAdminMenu'));
         add_action('wp_ajax_store_admin_data', array($this, 'storeAdminData'));
         add_action('admin_enqueue_scripts', array($this, 'addAdminScripts'));
+        add_action('wp_header', array($this, 'addHeaderCode'));
         add_action('wp_footer', array($this, 'addFooterCode'));
     }
 
@@ -158,7 +159,7 @@ class QiscusMultichannel
     /**
      * Qiscus Multichannel widget script
      */
-    public function addFooterCode()
+    public function addFooterCode($force = false)
     {
         $data = $this->getData();
 
@@ -196,6 +197,16 @@ class QiscusMultichannel
 
         <?php
 
+    }
+
+    public function addHeaderCode($force = false)
+    {
+        ?>
+
+        <link rel='stylesheet' type='text/css' href='https://qiscus-sdk.s3-ap-southeast-1.amazonaws.com/web/v2.8.2/qiscus-sdk.2.8.2.css'>
+        <link href="https://s3-ap-southeast-1.amazonaws.com/qiscus-sdk/public/qismo/qismo.css" rel='stylesheet' type='text/css' media='screen'>
+
+        <?php
     }
 }
 
